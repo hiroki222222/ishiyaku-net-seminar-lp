@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>医師向けオンラインセミナー | 医歯薬ネット</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --navy: #0d2b4e;
+    --navy-mid: #1a3f6f;
+    --blue: #1a5fa8;
+    --blue-light: #2a7acc;
+    --blue-pale: #e8f2fb;
+    --blue-line: #d0e6f7;
+    --accent: #1a7fc4;
+    --white: #ffffff;
+    --off-white: #f7fafd;
+    --gray-100: #f3f6fa;
+    --gray-200: #e4eaf2;
+    --gray-400: #96a7bc;
+    --gray-600: #5a6e87;
+    --gray-800: #2c3e52;
+    --text-main: #1e2d3d;
+    --text-sub: #4a5f75;
+    --text-light: #7a8fa5;
+    --border: #dde8f2;
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-lg: 8px;
+    --shadow-sm: 0 1px 4px rgba(13,43,78,0.06);
+    --shadow: 0 4px 16px rgba(13,43,78,0.10);
+    --shadow-lg: 0 12px 40px rgba(13,43,78,0.14);
+    --font-jp: 'Noto Sans JP', sans-serif;
+    --font-en: 'Inter', sans-serif;
+    --transition: 0.25s ease;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-jp);
+    color: var(--text-main);
+    background: var(--white);
+    line-height: 1.7;
+    font-size: 15px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ── FADE-IN ANIMATION ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-in-delay-1 { transition-delay: 0.1s; }
+  .fade-in-delay-2 { transition-delay: 0.2s; }
+  .fade-in-delay-3 { transition-delay: 0.3s; }
+  .fade-in-delay-4 { transition-delay: 0.4s; }
+  .fade-in-delay-5 { transition-delay: 0.5s; }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 100%;
+  }
+
+  .section {
+    padding: 100px 0;
+  }
+
+  .section-label {
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-label::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+
+  .section-desc {
+    font-size: 15px;
+    color: var(--text-sub);
+    line-height: 1.8;
+    margin-top: 16px;
+    max-width: 580px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  /* ── HEADER ── */
+  #header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow var(--transition);
+  }
+  #header.scrolled {
+    box-shadow: var(--shadow);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-mark svg {
+    width: 18px;
+    height: 18px;
+    color: white;
+    stroke: white;
+  }
+  .logo-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+  }
+  .logo-sub {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--gray-600);
+    font-family: var(--font-en);
+    letter-spacing: 0.08em;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-sub);
+    transition: color var(--transition);
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover {
+    color: var(--navy);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-jp);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+    padding: 12px 26px;
+  }
+  .btn-primary:hover {
+    background: var(--navy-mid);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(26,95,168,0.30);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--blue);
+    padding: 11px 24px;
+    border: 1.5px solid var(--blue);
+  }
+  .btn-outline:hover {
+    background: var(--blue-pale);
+  }
+
+  .btn-lg {
+    font-size: 15px;
+    padding: 16px 36px;
+  }
+
+  .btn-white {
+    background: white;
+    color: var(--navy);
+    padding: 14px 32px;
+  }
+  .btn-white:hover {
+    background: var(--blue-pale);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+    transition: all var(--transition);
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 24px 24px 32px;
+    z-index: 999;
+    box-shadow: var(--shadow-lg);
+  }
+  .mobile-menu.open {
+    display: block;
+  }
+  .mobile-nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 24px;
+  }
+  .mobile-nav-links li a {
+    display: block;
+    padding: 14px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    padding-top: 68px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(160deg, #0d2b4e 0%, #1a3f6f 45%, #1a5fa8 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(26,127,196,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255,255,255,0.04) 0%, transparent 40%),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: auto, auto, 80px 80px, 80px 80px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 60px;
+    align-items: center;
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 100px;
+    padding: 6px 16px 6px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+    backdrop-filter: blur(8px);
+  }
+  .hero-badge-dot {
+    width: 6px;
+    height: 6px;
+    background: #60c8ff;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+
+  .hero-title {
+    font-size: clamp(30px, 4vw, 52px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    white-space: nowrap;
+  }
+  .hero-title .accent {
+    color: #60c8ff;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.80);
+    line-height: 1.85;
+    margin-bottom: 40px;
+    max-width: 520px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 52px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 36px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .stat-item {}
+  .stat-num {
+    font-family: var(--font-en);
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .stat-num span {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.04em;
+  }
+
+  /* Hero Card */
+  .hero-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+  }
+  .hero-card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+  .hero-card-body {
+    padding: 24px;
+  }
+  .hero-card-tag {
+    display: inline-block;
+    background: var(--blue-pale);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+  .hero-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .hero-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+  .meta-row svg {
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .hero-card-footer {
+    padding: 16px 24px;
+    background: var(--gray-100);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hero-card-seats {
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+  .hero-card-seats strong {
+    color: #d64545;
+  }
+
+  /* ── ABOUT / FEATURES ── */
+  #about {
+    background: var(--off-white);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .about-img-wrap {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .about-img-wrap img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    display: block;
+  }
+  .about-img-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: white;
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .about-img-badge-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--blue);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-img-badge-icon svg {
+    color: white;
+    width: 20px;
+    height: 20px;
+  }
+  .about-img-badge-text strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    font-family: var(--font-en);
+  }
+  .about-img-badge-text span {
+    font-size: 11px;
+    color: var(--text-sub);
+  }
+
+  .about-checks {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.6;
+  }
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    background: var(--blue-pale);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .check-icon svg {
+    width: 11px;
+    height: 11px;
+    color: var(--blue);
+    stroke-width: 3;
+  }
+
+  /* ── SEMINAR INFO ── */
+  #seminar {
+    background: white;
+  }
+
+  .seminar-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .seminar-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .seminar-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition);
+    position: relative;
+  }
+  .seminar-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    border-color: var(--blue-line);
+  }
+  .seminar-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .seminar-card-body {
+    padding: 22px;
+  }
+  .seminar-card-category {
+    display: inline-block;
+    background: var(--blue-pale);
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+  .seminar-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .seminar-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .seminar-info-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-sub);
+  }
+  .seminar-info-row svg {
+    color: var(--accent);
+    width: 13px;
+    height: 13px;
+  }
+  .badge-new {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: var(--blue);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── WHY CHOOSE ── */
+  #why {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+  #why::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(26,127,196,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .why-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .why-header .section-label {
+    justify-content: center;
+    color: #60c8ff;
+  }
+  .why-header .section-label::after {
+    background: #60c8ff;
+  }
+  .why-header .section-title {
+    color: white;
+  }
+  .why-header .section-desc {
+    color: rgba(255,255,255,0.7);
+    margin: 16px auto 0;
+    text-align: center;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .why-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    transition: all var(--transition);
+  }
+  .why-item:hover {
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(96,200,255,0.30);
+  }
+  .why-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(26,127,196,0.25);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .why-icon svg {
+    width: 22px;
+    height: 22px;
+    color: #60c8ff;
+  }
+  .why-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .why-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  /* ── SPEAKER / PROCESS ── */
+  #process {
+    background: var(--off-white);
+  }
+
+  .process-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: calc(12.5% + 20px);
+    width: calc(75% - 40px);
+    height: 1px;
+    background: var(--blue-line);
+    z-index: 0;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .step-num {
+    width: 72px;
+    height: 72px;
+    background: white;
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: var(--shadow);
+  }
+  .step-num-inner {
+    font-family: var(--font-en);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1;
+  }
+  .step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--text-sub);
+    line-height: 1.75;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  /* ── TESTIMONIALS ── */
+  #testimonials {
+    background: white;
+  }
+  .testimonial-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .testimonial-card {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: all var(--transition);
+  }
+  .testimonial-card:hover {
+    box-shadow: var(--shadow);
+    border-color: var(--blue-line);
+  }
+  .stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+  .stars svg {
+    width: 15px;
+    height: 15px;
+    color: #f4b942;
+    fill: #f4b942;
+  }
+  .testimonial-text {
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.85;
+    margin-bottom: 20px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .author-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--blue-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+  }
+  .author-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .author-role {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  /* ── CTA ── */
+  #cta {
+    background: linear-gradient(135deg, #0d2b4e 0%, #1a5fa8 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 100px 0;
+  }
+  #cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 30% 50%, rgba(96,200,255,0.10) 0%, transparent 50%),
+                      radial-gradient(circle at 70% 50%, rgba(255,255,255,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .cta-title {
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .cta-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.85;
+    margin-bottom: 40px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .cta-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.50);
+    margin-top: 20px;
+  }
+
+  /* ── COMPANY ── */
+  #company {
+    background: var(--off-white);
+  }
+  .company-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .company-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .company-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .company-table td {
+    padding: 14px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    vertical-align: top;
+  }
+  .company-table td:first-child {
+    width: 120px;
+    font-weight: 600;
+    color: var(--text-sub);
+    font-size: 13px;
+    flex-shrink: 0;
+    padding-right: 16px;
+  }
+  .company-table td:last-child {
+    color: var(--text-main);
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: white;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .contact-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--blue-pale);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-icon svg {
+    color: var(--blue);
+    width: 18px;
+    height: 18px;
+  }
+  .contact-item-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .contact-item-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-main);
+    line-height: 1.5;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-sub);
+    margin-bottom: 7px;
+    letter-spacing: 0.02em;
+  }
+  .form-label .required {
+    color: #d64545;
+    margin-left: 4px;
+    font-size: 11px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-family: var(--font-jp);
+    font-size: 14px;
+    color: var(--text-main);
+    background: white;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+  }
+  .form-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(26,95,168,0.10);
+  }
+  .form-input::placeholder {
+    color: var(--gray-400);
+  }
+  textarea.form-input {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.7;
+  }
+  select.form-input {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2396a7bc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  .form-submit-wrap {
+    margin-top: 8px;
+  }
+  .form-note {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 12px;
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  #footer {
+    background: var(--navy);
+    padding: 60px 0 32px;
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .footer-logo-mark {
+    width: 34px;
+    height: 34px;
+    background: rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .footer-logo-mark svg {
+    width: 17px;
+    height: 17px;
+    color: white;
+    stroke: white;
+  }
+  .footer-logo-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.03em;
+  }
+  .footer-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+  .footer-col-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.50);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-links a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    transition: color var(--transition);
+  }
+  .footer-links a:hover {
+    color: white;
+  }
+  .footer-bottom {
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.40);
+    font-family: var(--font-en);
+    letter-spacing: 0.03em;
+  }
+  .footer-bottom-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+  .footer-bottom-links a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.40);
+    transition: color var(--transition);
+  }
+  .footer-bottom-links a:hover {
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ── SCROLL TO TOP ── */
+  #scrollTop {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    border: none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all var(--transition);
+    z-index: 100;
+  }
+  #scrollTop.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #scrollTop:hover {
+    background: var(--navy-mid);
+    box-shadow: var(--shadow-lg);
+  }
+  #scrollTop svg {
+    color: white;
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .hero-card {
+      max-width: 480px;
+    }
+    .hero-title {
+      white-space: normal;
+    }
+    .seminar-cards {
+      grid-template-columns: 1fr 1fr;
+    }
+    .why-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .steps {
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+    }
+    .steps::before { display: none; }
+    .testimonials-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-inner {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-inner > :first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 20px;
+    }
+    .section {
+      padding: 72px 0;
+    }
+    .nav-links, .header-cta { display: none; }
+    .hamburger { display: flex; }
+
+    .hero-inner {
+      padding: 56px 0;
+    }
+    .hero-stats {
+      gap: 24px;
+    }
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .seminar-cards {
+      grid-template-columns: 1fr;
+    }
+    .why-grid {
+      grid-template-columns: 1fr;
+    }
+    .steps {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+    .company-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 26px;
+      white-space: normal;
+    }
+    .hero-stats {
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .steps {
+      grid-template-columns: 1fr;
+    }
+    .hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .cta-actions {
+      flex-direction: column;
+    }
+    .btn-lg {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <i data-lucide="stethoscope"></i>
+        </div>
+        <div>
+          <div class="logo-text">医歯薬ネット</div>
+          <div class="logo-sub">Medical Online Seminar</div>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <ul class="nav-links">
+          <li><a href="#about">セミナーについて</a></li>
+          <li><a href="#seminar">開催プログラム</a></li>
+          <li><a href="#why">選ばれる理由</a></li>
+          <li><a href="#testimonials">受講者の声</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+        <a href="#contact" class="btn btn-primary header-cta">
+          <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+          無料申し込み
+        </a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul class="mobile-nav-links">
+    <li><a href="#about">セミナーについて</a></li>
+    <li><a href="#seminar">開催プログラム</a></li>
+    <li><a href="#why">選ばれる理由</a></li>
+    <li><a href="#testimonials">受講者の声</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+  <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center;">
+    <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+    無料申し込み
+  </a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge fade-in">
+          <div class="hero-badge-dot"></div>
+          2025年度 第2期 受講申込受付中
+        </div>
+        <h1 class="hero-title fade-in fade-in-delay-1">
+          臨床知識を深め、<br><span class="accent">診療の質</span>を高める<br>医師向けセミナー
+        </h1>
+        <p class="hero-desc fade-in fade-in-delay-2">
+          <span style="display:inline-block;">医歯薬ネットが提供するオンラインセミナーは、</span>
+          <span style="display:inline-block;">第一線の専門医が最新エビデンスをわかりやすく解説。</span>
+          <span style="display:inline-block;">多忙な先生方が、ご自身のペースで継続学習できる環境をご用意しています。</span>
+        </p>
+        <div class="hero-actions fade-in fade-in-delay-3">
+          <a href="#contact" class="btn btn-white btn-lg">
+            <i data-lucide="pencil" style="width:15px;height:15px;"></i>
+            無料で申し込む
+          </a>
+          <a href="#seminar" class="btn btn-outline btn-lg" style="color:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.35);">
+            プログラムを見る
+          </a>
+        </div>
+        <div class="hero-stats fade-in fade-in-delay-4">
+          <div class="stat-item">
+            <div class="stat-num">8,400<span>名+</span></div>
+            <div class="stat-label">累計受講医師数</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">96<span>%</span></div>
+            <div class="stat-label">受講満足度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">120<span>講座</span></div>
+            <div class="stat-label">開設コース数</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card fade-in fade-in-delay-2">
+        <img
+          class="hero-card-img"
+          src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=840&q=80&auto=format&fit=crop"
+          alt="医師向けオンラインセミナー"
+        >
+        <div class="hero-card-body">
+          <span class="hero-card-tag">次回開催</span>
+          <div class="hero-card-title">循環器疾患の最新管理戦略<br>〜心不全・不整脈の実践アプローチ〜</div>
+          <div class="hero-card-meta">
+            <div class="meta-row">
+              <i data-lucide="calendar" style="width:14px;height:14px;"></i>
+              2025年8月24日（土）14:00〜16:30
+            </div>
+            <div class="meta-row">
+              <i data-lucide="monitor" style="width:14px;height:14px;"></i>
+              Zoomオンライン開催 / 録画配信あり
+            </div>
+            <div class="meta-row">
+              <i data-lucide="user" style="width:14px;height:14px;"></i>
+              講師：山田 誠一 先生（東京大学附属病院）
+            </div>
+          </div>
+        </div>
+        <div class="hero-card-footer">
+          <span class="hero-card-seats">残席 <strong>12名</strong></span>
+          <a href="#contact" class="btn btn-primary" style="padding:9px 20px;font-size:13px;">
+            申し込む
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap fade-in">
+        <img
+          src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=900&q=80&auto=format&fit=crop"
+          alt="専門医による講義"
+        >
+        <div class="about-img-badge">
+          <div class="about-img-badge-icon">
+            <i data-lucide="award"></i>
+          </div>
+          <div class="about-img-badge-text">
+            <strong>2010</strong>
+            <span>年設立・15年の実績</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label fade-in">About</div>
+        <h2 class="section-title fade-in fade-in-delay-1">
+          医師のための、<br>医師による<br>継続的な学びの場
+        </h2>
+        <p class="section-desc fade-in fade-in-delay-2">
+          医歯薬ネットは、医療従事者の生涯教育を支援するオンラインプラットフォームです。第一線で活躍する専門医が、最新のエビデンスと実臨床の知見をわかりやすく伝えます。
+        </p>
+        <div class="about-checks fade-in fade-in-delay-3">
+          <div class="check-item">
+            <div class="check-icon"><i data-lucide="check"></i></div>
+            <span>日本専門医機構・各学会の認定単位取得に対応</span>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i data-lucide="check"></i></div>
+            <span>ライブ配信後、録画を90日間アーカイブ提供</span>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i data-lucide="check"></i></div>
+            <span>質疑応答・ディスカッションで双方向の学習を実現</span>
+          </div>
+          <div class="check-item">
+            <div class="check-icon"><i data-lucide="check"></i></div>
+            <span>受講料は医師個人・医療機関向け法人プランを用意</span>
+          </div>
+        </div>
+        <div style="margin-top:32px;" class="fade-in fade-in-delay-4">
+          <a href="#seminar" class="btn btn-primary">
+            開催プログラムを見る
+            <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEMINAR PROGRAMS -->
+<section id="seminar" class="section">
+  <div class="container">
+    <div class="seminar-header">
+      <div class="section-label fade-in" style="justify-content:center;">Programs</div>
+      <h2 class="section-title fade-in fade-in-delay-1">開催プログラム</h2>
+      <p class="section-desc fade-in fade-in-delay-2" style="margin-left:auto;margin-right:auto;text-align:center;">
+        各診療科の専門家が最新ガイドラインと実践的アプローチを解説します。
+      </p>
+    </div>
+    <div class="seminar-cards">
+      <div class="seminar-card fade-in">
+        <div class="badge-new">NEW</div>
+        <img
+          class="seminar-card-img"
+          src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80&auto=format&fit=crop"
+          alt="循環器"
+        >
+        <div class="seminar-card-body">
+          <span class="seminar-card-category">循環器内科</span>
+          <div class="seminar-card-title">循環器疾患の最新管理戦略〜心不全・不整脈の実践アプローチ〜</div>
+          <div class="seminar-card-info">
+            <div class="seminar-info-row">
+              <i data-lucide="calendar"></i>
+              2025年8月24日（土）14:00〜
+            </div>
+            <div class="seminar-info-row">
+              <i data-lucide="monitor"></i>
+              オンライン（Zoom）
+            </div>
+            <div class="seminar-info-row">
+              <i data-lucide="users"></i>
+              定員50名
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="seminar-card fade-in fade-in-delay-1">
+        <img
+          class="seminar-card-img"
+          src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=80&auto=format&fit=crop"
+          alt="糖尿病"
+        >
+        <div class="seminar-card-body">
+          <span class="seminar-card-category">内分泌・代謝内科</span>
+          <div class="seminar-card-title">2型糖尿病の薬物療法アップデート〜新規薬剤の使い分けと症例検討〜</div>
+          <div class="seminar-card-info">
+            <div class="seminar-info-row">
+              <i data-lucide="calendar"></i>
+              2025年9月13日（土）13:00〜
+            </div>
+            <div class="seminar-info-row">
+              <i data-lucide="monitor"></i>
+              オンライン（Zoom）
+            </div>
+            <div class="seminar-info-row">
+              <i data-lucide="users"></i>
+              定員50名
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="seminar-card fade-in fade-in-delay-2">
+        <img
+          class="seminar-card-img"
+          src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80&auto=format&fit=crop"
+          alt="緩和ケア"
+        >
+        <div class="seminar-card-body">
+          <span class="seminar-card-category">緩和医療</span>
+          <div class="seminar-card-title">がん疼痛管理の実践〜オピオイド適正使用と緩和ケアの導入タイミング〜</div>
+          <div class="seminar-card-info">
+            <div class="seminar-info-row">
+              <i data-lucide="calendar"></i>
+              2025年10月4日（土）14:00〜
+            </div>
+            <div class="seminar-info-row">
+              <i data-lucide="monitor"></i>
+              オンライン（Zoom）
+            </div>
+            <div class="seminar-info-row">
+              <i data-lucide="users"></i>
+              定員50名
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;" class="fade-in">
+      <a href="#contact" class="btn btn-outline">
+        全プログラムを見る
+        <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section id="why" class="section">
+  <div class="container">
+    <div class="why-header">
+      <div class="section-label fade-in">Why Choose Us</div>
+      <h2 class="section-title fade-in fade-in-delay-1">医歯薬ネットが選ばれる理由</h2>
+      <p class="section-desc fade-in fade-in-delay-2">
+        医師の多忙な日常に寄り添い、質の高い継続学習を実現するための環境が揃っています。
+      </p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item fade-in">
+        <div class="why-icon"><i data-lucide="graduation-cap"></i></div>
+        <div class="why-title">国内トップ専門医が登壇</div>
+        <div class="why-desc">大学病院・専門医療機関の第一線で活躍する専門医が、最新ガイドラインと実臨床の知見を体系的に解説します。</div>
+      </div>
+      <div class="why-item fade-in fade-in-delay-1">
+        <div class="why-icon"><i data-lucide="video"></i></div>
+        <div class="why-title">録画アーカイブで繰り返し学習</div>
+        <div class="why-desc">ライブ配信後90日間、録画を何度でも視聴可能。オンコール・当直でリアルタイム参加が難しい先生も安心してご受講いただけます。</div>
+      </div>
+      <div class="why-item fade-in fade-in-delay-2">
+        <div class="why-icon"><i data-lucide="badge-check"></i></div>
+        <div class="why-title">単位・認定取得に対応</div>
+        <div class="why-desc">日本専門医機構や各学会が認定するCME単位を取得可能。専門医更新・資格維持のための学習をまとめて管理できます。</div>
+      </div>
+      <div class="why-item fade-in fade-in-delay-3">
+        <div class="why-icon"><i data-lucide="message-circle"></i></div>
+        <div class="why-title">双方向の質疑応答</div>
+        <div class="why-desc">セミナー中のチャット質問や専用フォームを通じ、登壇医師へ直接質問が可能。疑問をその場で解消できます。</div>
+      </div>
+      <div class="why-item fade-in fade-in-delay-4">
+        <div class="why-icon"><i data-lucide="shield"></i></div>
+        <div class="why-title">医師限定・審査制の安心環境</div>
+        <div class="why-desc">医籍番号による受講資格確認で、医師のみが参加できるクローズドな学習コミュニティを維持しています。</div>
+      </div>
+      <div class="why-item fade-in fade-in-delay-5">
+        <div class="why-icon"><i data-lucide="building-2"></i></div>
+        <div class="why-title">法人・施設向けプランも対応</div>
+        <div class="why-desc">医療機関・病院グループ向けの一括受講プランをご用意。職員教育・院内研修の補完としてもご活用いただけます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section">
+  <div class="container">
+    <div class="process-header">
+      <div class="section-label fade-in" style="justify-content:center;">Flow</div>
+      <h2 class="section-title fade-in fade-in-delay-1">受講までの流れ</h2>
+      <p class="section-desc fade-in fade-in-delay-2" style="margin:16px auto 0;text-align:center;">
+        お申し込みからご受講まで、最短即日でご利用いただけます。
+      </p>
+    </div>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">
+          <div class="step-num-inner">01</div>
+        </div>
+        <div class="step-title">申し込みフォーム<br>から登録</div>
+        <div class="step-desc">お名前・医籍番号・ご所属をフォームに入力してお申し込みください。</div>
+      </div>
+      <div class="step fade-in fade-in-delay-1">
+        <div class="step-num">
+          <div class="step-num-inner">02</div>
+        </div>
+        <div class="step-title">受講資格の<br>確認・承認</div>
+        <div class="step-desc">医師資格を確認後、1〜2営業日以内に承認メールをお送りします。</div>
+      </div>
+      <div class="step fade-in fade-in-delay-2">
+        <div class="step-num">
+          <div class="step-num-inner">03</div>
+        </div>
+        <div class="step-title">受講URLを<br>メールで受取</div>
+        <div class="step-desc">Zoom参加用URLと資料を、開催3日前までにご登録メールへお送りします。</div>
+      </div>
+      <div class="step fade-in fade-in-delay-3">
+        <div class="step-num">
+          <div class="step-num-inner">04</div>
+        </div>
+        <div class="step-title">当日ライブ受講<br>＋アーカイブ視聴</div>
+        <div class="step-desc">ライブ参加またはアーカイブ動画で、ご都合に合わせていつでも受講できます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="section">
+  <div class="container">
+    <div class="testimonial-header">
+      <div class="section-label fade-in" style="justify-content:center;">Testimonials</div>
+      <h2 class="section-title fade-in fade-in-delay-1">受講者の声</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="stars">
+          <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+        </div>
+        <div class="testimonial-text">多忙な中でも録画視聴が可能なため、週末にまとめて学べるのが非常に助かっています。講師の先生が実際の症例をもとに解説してくださるので、翌週から即座に診療に活かせました。</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">K</div>
+          <div>
+            <div class="author-name">K.M. 先生</div>
+            <div class="author-role">内科 / 都内クリニック勤務</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in fade-in-delay-1">
+        <div class="stars">
+          <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+        </div>
+        <div class="testimonial-text">専門医更新のCME単位が効率よく取れる点が決め手でした。スライド資料のクオリティも高く、セミナー後も手元に残るため復習にとても役立っています。</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">T</div>
+          <div>
+            <div class="author-name">T.N. 先生</div>
+            <div class="author-role">循環器内科 / 大学病院勤務</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in fade-in-delay-2">
+        <div class="stars">
+          <i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i>
+        </div>
+        <div class="testimonial-text">質疑応答の時間が充実しており、普段なかなか聞けない専門医への質問が直接できる貴重な機会です。地方在住ですが、移動なしで最高品質のセミナーに参加できることに感謝しています。</div>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div>
+            <div class="author-name">A.S. 先生</div>
+            <div class="author-role">総合診療科 / 地域中核病院勤務</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <h2 class="cta-title fade-in">まずは無料で<br>セミナーに参加してみませんか</h2>
+      <p class="cta-desc fade-in fade-in-delay-1">
+        <span style="display:inline-block;">初回受講は無料でご参加いただけます。</span>
+        <span style="display:inline-block;">登録から申し込みまで5分で完了。</span>
+      </p>
+      <div class="cta-actions fade-in fade-in-delay-2">
+        <a href="#contact" class="btn btn-white btn-lg">
+          <i data-lucide="pencil" style="width:15px;height:15px;"></i>
+          無料で申し込む
+        </a>
+        <a href="#seminar" class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.30);">
+          プログラム一覧を見る
+        </a>
+      </div>
+      <p class="cta-note fade-in fade-in-delay-3">
+        ※ 受講は医師免許をお持ちの方に限ります。申し込み後に資格確認のご連絡をする場合があります。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY -->
+<section id="company" class="section">
+  <div class="container">
+    <div class="company-grid">
+      <div>
+        <div class="section-label fade-in">Company</div>
+        <h2 class="section-title fade-in fade-in-delay-1">運営会社</h2>
+        <p class="section-desc fade-in fade-in-delay-2">
+          医療従事者の継続的な学びを支援するため、医師・医療情報専門家が共同設立した会社です。
+        </p>
+      </div>
+      <div class="fade-in fade-in-delay-1">
+        <table class="company-table">
+          <tr>
+            <td>会社名</td>
+            <td>株式会社医歯薬ネット</td>
+          </tr>
+          <tr>
+            <td>設立</td>
+            <td>2010年4月</td>
+          </tr>
+          <tr>
+            <td>所在地</td>
+            <td>〒100-0005 東京都千代田区丸の内1丁目6番5号</td>
+          </tr>
+          <tr>
+            <td>事業内容</td>
+            <td>医療従事者向けオンライン教育サービスの提供、医療情報プラットフォームの運営</td>
+          </tr>
+          <tr>
+            <td>代表取締役</td>
+            <td>田中 浩一</td>
+          </tr>
+          <tr>
+            <td>資本金</td>
+            <td>5,000万円</td>
+          </tr>
+          <tr>
+            <td>加盟団体</td>
+            <td>日本医学会連合、日本医師会認定継続教育センター</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="section-label fade-in">Contact</div>
+        <h2 class="section-title fade-in fade-in-delay-1">お問い合わせ・<br>セミナー申し込み</h2>
+        <p class="section-desc fade-in fade-in-delay-2">
+          ご不明点・受講に関するご質問は、下記フォームまたはお電話にてお気軽にお問い合わせください。
+        </p>
+        <div class="contact-info">
+          <div class="contact-item fade-in fade-in-delay-2">
+            <div class="contact-icon"><i data-lucide="phone"></i></div>
+            <div>
+              <div class="contact-item-label">電話</div>
+              <div class="contact-item-value">03-XXXX-XXXX<br><span style="font-size:12px;color:var(--text-light);">平日 9:00〜18:00</span></div>
+            </div>
+          </div>
+          <div class="contact-item fade-in fade-in-delay-3">
+            <div class="contact-icon"><i data-lucide="mail"></i></div>
+            <div>
+              <div class="contact-item-label">メール</div>
+              <div class="contact-item-value">info@ishiyaku-net.co.jp</div>
+            </div>
+          </div>
+          <div class="contact-item fade-in fade-in-delay-4">
+            <div class="contact-icon"><i data-lucide="clock"></i></div>
+            <div>
+              <div class="contact-item-label">受付時間</div>
+              <div class="contact-item-value">平日 9:00〜18:00<br><span style="font-size:12px;color:var(--text-light);">土日祝・年末年始は翌営業日対応</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in fade-in-delay-1">
+        <div style="background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px;">
+          <div class="form-group">
+            <label class="form-label">お名前<span class="required">必須</span></label>
+            <input type="text" class="form-input" placeholder="山田 太郎">
+          </div>
+          <div class="form-group">
+            <label class="form-label">医療機関名<span class="required">必須</span></label>
+            <input type="text" class="form-input" placeholder="〇〇大学附属病院">
+          </div>
+          <div class="form-group">
+            <label class="form-label">診療科</label>
+            <input type="text" class="form-input" placeholder="内科・循環器内科 など">
+          </div>
+          <div class="form-group">
+            <label class="form-label">メールアドレス<span class="required">必須</span></label>
+            <input type="email" class="form-input" placeholder="example@hospital.jp">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ご希望のセミナー</label>
+            <select class="form-input">
+              <option value="">選択してください</option>
+              <option>循環器疾患の最新管理戦略（8/24）</option>
+              <option>2型糖尿病の薬物療法アップデート（9/13）</option>
+              <option>がん疼痛管理の実践（10/4）</option>
+              <option>その他・未定</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">お問い合わせ内容</label>
+            <textarea class="form-input" placeholder="ご質問・ご要望をご記入ください"></textarea>
+          </div>
+          <div class="form-submit-wrap">
+            <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">
+              <i data-lucide="send" style="width:15px;height:15px;"></i>
+              送信する
+            </button>
+          </div>
+          <p class="form-note">送信いただいた個人情報は、お問い合わせへの返答・セミナー運営にのみ使用します。<a href="#" style="color:var(--blue);">プライバシーポリシー</a>をご確認ください。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">
+          <div class="footer-logo-mark">
+            <i data-lucide="stethoscope"></i>
+          </div>
+          <div class="footer-logo-text">医歯薬ネット</div>
+        </div>
+        <p class="footer-tagline">医療従事者の生涯学習を、<br>もっと自由に、もっと質高く。</p>
+      </div>
+      <div>
+        <div class="footer-col-title">セミナー</div>
+        <ul class="footer-links">
+          <li><a href="#seminar">開催プログラム</a></li>
+          <li><a href="#about">受講の特徴</a></li>
+          <li><a href="#process">受講の流れ</a></li>
+          <li><a href="#testimonials">受講者の声</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">会社情報</div>
+        <ul class="footer-links">
+          <li><a href="#company">会社概要</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+          <li><a href="#">プライバシーポリシー</a></li>
+          <li><a href="#">利用規約</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 Ishiyaku-Net Inc. All rights reserved.</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#">プライバシーポリシー</a></li>
+        <li><a href="#">利用規約</a></li>
+        <li><a href="#">特定商取引法</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- SCROLL TO TOP -->
+<button id="scrollTop" aria-label="ページトップへ">
+  <i data-lucide="chevron-up"></i>
+</button>
+
+<script>
+  // Lucide Icons
+  lucide.createIcons();
+
+  // Header scroll
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  // Close mobile menu on link click
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Scroll to top
+  const scrollTopBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      scrollTopBtn.classList.add('show');
+    } else {
+      scrollTopBtn.classList.remove('show');
+    }
+  });
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Intersection Observer — fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Hero elements visible on load
+  setTimeout(() => {
+    document.querySelectorAll('#hero .fade-in').forEach(el => el.classList.add('visible'));
+  }, 100);
+</script>
+</body>
+</html>
